@@ -23,17 +23,25 @@ public class ValidationController {
 
     @GetMapping("/validate-cpf/{cpf}")
     public ResponseEntity<ValidationResponse> validateCpf(@PathVariable final String cpf) {
-        log.info("Starting the request for CPF validation {}", cpf);
+        log.info("Starting the request for CPF validation: {}", cpf);
         final var responseMessage = validationService.validateCpf(cpf);
-        log.info("Finishing the request for CPF validation {}", responseMessage.message());
+        log.info("Finishing the request for CPF validation: {}", responseMessage.message());
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 
     @GetMapping("/validate-cnpj/{cnpj}")
     public ResponseEntity<ValidationResponse> validateCnpj(@PathVariable final String cnpj) {
-        log.info("Starting the request for CNPJ validation {}", cnpj);
+        log.info("Starting the request for CNPJ validation: {}", cnpj);
         final var responseMessage = validationService.validateCnpj(cnpj);
-        log.info("Finishing the request for CNPJ validation {}", responseMessage.message());
+        log.info("Finishing the request for CNPJ validation: {}", responseMessage.message());
+        return ok(new ValidationResponse(OK, responseMessage.message()));
+    }
+
+    @GetMapping("/validate-name/{name}")
+    public ResponseEntity<ValidationResponse> validateName(@PathVariable final String name) {
+        log.info("Starting the request for name validation: {}", name);
+        final var responseMessage = validationService.validateName(name);
+        log.info("Finishing the request for name validation: {}", responseMessage.message());
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 }
