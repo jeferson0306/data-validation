@@ -1,9 +1,10 @@
 package br.com.data.validation.service;
 
 import br.com.data.validation.domain.response.ValidationResponse;
+import br.com.data.validation.util.CepUtility;
 import br.com.data.validation.util.CnpjUtility;
 import br.com.data.validation.util.CpfUtility;
-import br.com.data.validation.util.CepUtility;
+import br.com.data.validation.util.NameUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,13 @@ public class GenerateService {
         final var cep = CepUtility.generateValidCep();
         log.info("Finishing the request for CEP generation: {}", cep);
         return new ValidationResponse(OK, "Generated valid CEP: " + cep);
+    }
+
+    public ValidationResponse generateName() {
+        log.info("Starting the request for name generation");
+        final var name = NameUtility.generateValidName();
+        log.info("Finishing the request for name generation: {}", name);
+        return new ValidationResponse(OK, "Generated valid name: " + name);
     }
 
 }

@@ -43,4 +43,12 @@ public class GenerateController {
         return ok(responseMessage);
     }
 
+    @GetMapping("/generate-name")
+    public ResponseEntity<ValidationResponse> generateName() {
+        log.info("Starting the request for name generation");
+        final var responseMessage = generateService.generateName();
+        log.info("Finishing the request for name generation: {}", responseMessage.message());
+        return ok(responseMessage);
+    }
+
 }

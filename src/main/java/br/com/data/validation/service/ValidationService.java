@@ -59,9 +59,10 @@ public class ValidationService {
 
     public ValidationResponse validateName(final String name) {
         log.info("Starting the name validation: {}", name);
-        if (NameUtility.validateName(name)) {
-            log.info("The provided name is valid: {}", name);
-            return new ValidationResponse(OK, "The provided name is valid: " + name);
+        final var cleanedName = NameUtility.validateName(name);
+        if (cleanedName != null) {
+            log.info("The provided name is valid: {}", cleanedName);
+            return new ValidationResponse(OK, "The provided name is valid: " + cleanedName);
         } else {
             log.error("The provided name is invalid: {}", name);
             return new ValidationResponse(OK, "The provided name is invalid: " + name);
