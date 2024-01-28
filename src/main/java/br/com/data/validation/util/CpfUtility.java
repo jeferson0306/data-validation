@@ -3,8 +3,12 @@ package br.com.data.validation.util;
 import br.com.data.validation.domain.exception.InvalidDocumentException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Random;
+
 @Slf4j
 public final class CpfUtility {
+
+    private static final Random rnd = new Random();
 
     private CpfUtility() {
         throw new IllegalStateException("CpfUtility class");
@@ -74,5 +78,39 @@ public final class CpfUtility {
             log.error("Error verifying the provided CPF in the utility class for the document {} with error: {}", cpf, exception.getMessage());
             return (false);
         }
+    }
+
+    public static String generateValidCpf() {
+
+        log.info("Starting CPF generation in utility class");
+
+        final var cpf = new StringBuilder();
+
+        for (int i = 0; i < 9; i++) {
+            cpf.append(rnd.nextInt(10));
+        }
+
+        cpf.append(calcularDigitoVerificador(cpf.toString()));
+        cpf.append(calcularDigitoVerificador(cpf.toString()));
+
+        log.info("Finishing CPF generation in utility class for valid document {}", cpf);
+        return cpf.toString();
+    }
+
+    private static char calcularDigitoVerificador(final String cpf) {
+
+        log.info("Starting CPF verification in utility class for document {}", cpf);
+
+        var sum = 0;
+        var peso = cpf.length() + 1;
+
+        for (int i = 0; i < cpf.length(); i++) {
+            sum += (cpf.charAt(i) - '0') * peso--;
+        }
+
+        final var remainder = 11 - (sum % 11);
+
+        log.info("Finishing CPF verification in utility class for valid document {}", cpf);
+        return (remainder > 9) ? '0' : (char) (remainder + '0');
     }
 }

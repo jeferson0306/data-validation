@@ -2,10 +2,14 @@ package br.com.data.validation.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Random;
+
 import static java.lang.Long.parseLong;
 
 @Slf4j
 public final class CnpjUtility {
+
+    private static final Random rnd = new Random();
 
     private CnpjUtility() {
         throw new IllegalStateException("Utility class");
@@ -69,4 +73,42 @@ public final class CnpjUtility {
         log.info("Finishing equal numbers verification in CNPJ: {}", cnpj);
         return equalSequentialNumbers;
     }
+
+    public static String generateValidCnpj() {
+
+        log.info("Starting CNPJ generation in utility class");
+
+        final var cnpj = new StringBuilder();
+
+        for (int i = 0; i < 12; i++) {
+            cnpj.append(rnd.nextInt(10));
+        }
+
+        cnpj.append(calcularDigitoVerificadorCnpj(cnpj.toString()));
+        cnpj.append(calcularDigitoVerificadorCnpj(cnpj.toString()));
+
+        log.info("Finishing CNPJ generation in utility class for valid document {}", cnpj);
+        return cnpj.toString();
+    }
+
+    private static char calcularDigitoVerificadorCnpj(final String cnpj) {
+
+        log.info("Starting CNPJ generation in utility class");
+
+        var sum = 0;
+        int digit;
+        int[] weight = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+        for (int i = cnpj.length() - 1; i >= 0; i--) {
+            digit = cnpj.charAt(i) - '0';
+            sum += digit * weight[weight.length - cnpj.length() + i];
+        }
+
+        sum %= 11;
+        sum = (sum < 2) ? 0 : 11 - sum;
+
+        log.info("Finishing CNPJ generation in utility class for valid document {}", cnpj);
+        return (char) (sum + '0');
+    }
+
 }

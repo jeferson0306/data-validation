@@ -21,11 +21,11 @@ public class ValidationController {
 
     private final ValidationService validationService;
 
-    @GetMapping("/validate-cpf/{cpf}")
-    public ResponseEntity<ValidationResponse> validateCpf(@PathVariable final String cpf) {
-        log.info("Starting the request for CPF validation: {}", cpf);
-        final var responseMessage = validationService.validateCpf(cpf);
-        log.info("Finishing the request for CPF validation: {}", responseMessage.message());
+    @GetMapping("/validate-cep/{cep}")
+    public ResponseEntity<ValidationResponse> validateCep(@PathVariable final String cep) {
+        log.info("Starting the request for CEP validation: {}", cep);
+        final var responseMessage = validationService.validateCep(cep);
+        log.info("Finishing the request for CEP validation: {}", responseMessage.message());
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 
@@ -37,6 +37,22 @@ public class ValidationController {
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 
+    @GetMapping("/validate-cnh/{cnh}")
+    public ResponseEntity<ValidationResponse> validateCnh(@PathVariable final String cnh) {
+        log.info("Starting the request for CNH validation: {}", cnh);
+        final var responseMessage = validationService.validateCnh(cnh);
+        log.info("Finishing the request for CNH validation: {}", responseMessage.message());
+        return ok(new ValidationResponse(OK, responseMessage.message()));
+    }
+
+    @GetMapping("/validate-cpf/{cpf}")
+    public ResponseEntity<ValidationResponse> validateCpf(@PathVariable final String cpf) {
+        log.info("Starting the request for CPF validation: {}", cpf);
+        final var responseMessage = validationService.validateCpf(cpf);
+        log.info("Finishing the request for CPF validation: {}", responseMessage.message());
+        return ok(new ValidationResponse(OK, responseMessage.message()));
+    }
+
     @GetMapping("/validate-name/{name}")
     public ResponseEntity<ValidationResponse> validateName(@PathVariable final String name) {
         log.info("Starting the request for name validation: {}", name);
@@ -44,4 +60,5 @@ public class ValidationController {
         log.info("Finishing the request for name validation: {}", responseMessage.message());
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
+
 }
