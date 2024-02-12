@@ -57,6 +57,18 @@ public class ValidationService {
         }
     }
 
+    public ValidationResponse validateEmail(final String email) {
+        log.info("Starting the email validation: {}", email);
+        final var isValidEmail = EmailUtility.validateEmail(email);
+        if (isValidEmail) {
+            log.info("The provided email is valid: {}", email);
+            return new ValidationResponse(OK, "The provided email is valid: " + email);
+        } else {
+            log.error("The provided email is invalid: {}", email);
+            return new ValidationResponse(OK, "The provided email is invalid: " + email);
+        }
+    }
+
     public ValidationResponse validateName(final String name) {
         log.info("Starting the name validation: {}", name);
         final var cleanedName = NameUtility.validateName(name);
@@ -66,6 +78,17 @@ public class ValidationService {
         } else {
             log.error("The provided name is invalid: {}", name);
             return new ValidationResponse(OK, "The provided name is invalid: " + name);
+        }
+    }
+
+    public ValidationResponse validatePhone(final String phone) {
+        log.info("Starting the phone validation: {}", phone);
+        if (PhoneUtility.validatePhone(phone)) {
+            log.info("The provided phone is valid: {}", phone);
+            return new ValidationResponse(OK, "The provided phone is valid: " + phone);
+        } else {
+            log.error("The provided phone is invalid: {}", phone);
+            return new ValidationResponse(OK, "The provided phone is invalid: " + phone);
         }
     }
 

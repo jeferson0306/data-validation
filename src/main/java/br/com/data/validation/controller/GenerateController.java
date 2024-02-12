@@ -51,4 +51,13 @@ public class GenerateController {
         return ok(responseMessage);
     }
 
+
+    @GetMapping("/generate-phone")
+    public ResponseEntity<ValidationResponse> generatePhone() {
+        log.info("Starting the request for phone number generation");
+        final var responseMessage = generateService.generatePhone();
+        log.info("Finishing the request for phone number generation: {}", responseMessage.message());
+        return ok(responseMessage);
+    }
+
 }

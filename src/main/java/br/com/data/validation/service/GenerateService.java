@@ -1,10 +1,7 @@
 package br.com.data.validation.service;
 
 import br.com.data.validation.domain.response.ValidationResponse;
-import br.com.data.validation.util.CepUtility;
-import br.com.data.validation.util.CnpjUtility;
-import br.com.data.validation.util.CpfUtility;
-import br.com.data.validation.util.NameUtility;
+import br.com.data.validation.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +37,13 @@ public class GenerateService {
         final var name = NameUtility.generateValidName();
         log.info("Finishing the request for name generation: {}", name);
         return new ValidationResponse(OK, "Generated valid name: " + name);
+    }
+
+    public ValidationResponse generatePhone() {
+        log.info("Starting the request for phone number generation");
+        final var phone = PhoneUtility.generateValidPhone();
+        log.info("Finishing the request for phone number generation: {}", phone);
+        return new ValidationResponse(OK, "Generated valid phone number: " + phone);
     }
 
 }

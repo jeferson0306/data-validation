@@ -53,11 +53,27 @@ public class ValidationController {
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 
+    @GetMapping("/validate-email/{email}")
+    public ResponseEntity<ValidationResponse> validateEmail(@PathVariable final String email) {
+        log.info("Starting the request for email validation: {}", email);
+        final var responseMessage = validationService.validateEmail(email);
+        log.info("Finishing the request for email validation: {}", responseMessage.message());
+        return ok(new ValidationResponse(OK, responseMessage.message()));
+    }
+
     @GetMapping("/validate-name/{name}")
     public ResponseEntity<ValidationResponse> validateName(@PathVariable final String name) {
         log.info("Starting the request for name validation: {}", name);
         final var responseMessage = validationService.validateName(name);
         log.info("Finishing the request for name validation: {}", responseMessage.message());
+        return ok(new ValidationResponse(OK, responseMessage.message()));
+    }
+
+    @GetMapping("/validate-phone/{phone}")
+    public ResponseEntity<ValidationResponse> validatePhone(@PathVariable final String phone) {
+        log.info("Starting the request for phone validation: {}", phone);
+        final var responseMessage = validationService.validatePhone(phone);
+        log.info("Finishing the request for phone validation: {}", responseMessage.message());
         return ok(new ValidationResponse(OK, responseMessage.message()));
     }
 
