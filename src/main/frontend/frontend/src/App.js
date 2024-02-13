@@ -20,10 +20,10 @@ class App extends Component {
             const response = await fetch(`http://localhost:8080/v1/api/validate-cpf/${cpf}`);
             if (response.status === 200) {
                 const data = await response.json();
-                const isValid = data.isValid;
+                const isValid = !data.message.includes("invalid");
                 this.setState({validationMessage: data.message, isValid: isValid});
             } else {
-                this.setState({validationMessage: 'Invalid CPF', isValid: false});
+                this.setState({validationMessage: 'Error validating CPF', isValid: false});
             }
         } catch (error) {
             console.error('Error:', error);
